@@ -14,11 +14,17 @@ export default function List({navigation}) {
   return (
       <SafeAreaView style={styles.container}>
         <Text>Produce: </Text>
+        <View style={styles.header}>
+          <Text>Name</Text>
+          <Text>Storage</Text>
+          <Text>Expires in:</Text>
+        </View>
         <View>
           <FlatList
             data={listData}
             keyExtractor ={(item) => item.id}
             renderItem={renderItem}
+            showsVerticalScrollIndicator={false}
           />
         </View>
         <Image style={styles.plusIcon} source={require("../assets/3032220.png")} />
@@ -27,8 +33,22 @@ export default function List({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  plusIcon : {
-    width: 40, 
-    height: 40
+  container: {
+    display: "flex",
+    flexDirection: 'column',
+    alignItems: 'center',
+    height: "95%",
   },
+  header: {
+    backgroundColor: 'orange',
+    width: 300,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between"
+  },
+    plusIcon : {
+      width: 40, 
+      height: 40
+    },
+
 });

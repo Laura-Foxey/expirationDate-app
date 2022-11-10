@@ -1,27 +1,32 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
+import ExpirationDate from './ExpirationDate';
 
 export default function ListItem({item, navigation}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
     <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.item}>
-        <View>
-            <Text>{item.name}</Text>
-            <Text>{item.storage}</Text>
-            <Text>{item.expiration}</Text>
+        <View style={styles.display}>
+            <View style={styles.text}>
+                <Text>{item.name}</Text>
+                <Text>{item.storage}</Text>
+                <ExpirationDate expirationDate={item.expiration}/>
+            </View>
+            <View>
             {expanded &&
                 <Text>{item.details}</Text> 
             }
-            <View style={styles.Icons}>
-            <TouchableOpacity key={item.id} onPress={() => navigation.navigate("ItemDetails", { item })} >
-                <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
-            </TouchableOpacity>
-            <TouchableOpacity>
-                <Image style={styles.deleteIcon} source={require("../assets/3096687.png")} 
-                />
-            </TouchableOpacity>
             </View>
+            <View style={styles.Icons}>
+                    <TouchableOpacity key={item.id} onPress={() => navigation.navigate("ItemDetails", { item })} >
+                        <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
+                    </TouchableOpacity>
+                    <TouchableOpacity>
+                        <Image style={styles.deleteIcon} source={require("../assets/3096687.png")} 
+                        />
+                    </TouchableOpacity>
+                </View>
         </View>
     </TouchableOpacity>
   );
@@ -30,10 +35,17 @@ export default function ListItem({item, navigation}) {
 const styles = StyleSheet.create({
     item: {
         backgroundColor: '#f9c2ff',
-        width: 200,
-        height: 120,
-        padding: 10,
         marginVertical: 5,
+        width: 300,
+      },
+      text: {
+        width: 300,
+        flexDirection: "row", 
+        justifyContent: "space-between"
+      },
+      display: {
+        flexDirection: "column",
+        alignItems: 'center',
       },
       editIcon: {
         width: 40, 
