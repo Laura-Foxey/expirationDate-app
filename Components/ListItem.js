@@ -4,9 +4,16 @@ import ExpirationDate from './ExpirationDate';
 
 export default function ListItem({item, navigation}) {
   const [expanded, setExpanded] = useState(false);
+  const [selected, setSelected] = useState(false)
+
+  const navigateToItem = () => {
+    setExpanded(false);
+    setSelected(false);
+    navigation.push("ItemDetails", { item })
+  }
 
   return (
-    <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.item}>
+    <TouchableOpacity onPress={() => setExpanded(!expanded)} style={selected ? styles.selected : styles.item} onLongPress={() => setSelected(!selected)}>
         <View style={styles.display}>
             <View style={styles.text}>
                 <Text>{item.name}</Text>
@@ -19,7 +26,7 @@ export default function ListItem({item, navigation}) {
             }
             </View>
             <View style={styles.Icons}>
-                    <TouchableOpacity key={item.id} onPress={() => navigation.navigate("ItemDetails", { item })} >
+                    <TouchableOpacity key={item.id} onPress={() => navigateToItem()} >
                         <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
                     </TouchableOpacity>
                     <TouchableOpacity>
@@ -37,30 +44,33 @@ const styles = StyleSheet.create({
         backgroundColor: '#f9c2ff',
         marginVertical: 5,
         width: 300,
-      },
-      text: {
+    },
+    selected: {
+        backgroundColor: 'red',
+        marginVertical: 5,
+        width: 300,
+    },
+    text: {
         width: 300,
         flexDirection: "row", 
         justifyContent: "space-between"
-      },
-      display: {
+    },
+    display: {
         flexDirection: "column",
         alignItems: 'center',
-      },
+    },
       editIcon: {
         width: 40, 
         height: 40,
         margin: 5
-      },
+    },
       deleteIcon: {
         width: 40, 
         height: 40,
         margin: 5
-      },
+    },
       Icons: {
         display: 'flex',
         flexDirection: 'row'
-      }
-
-
+    }
 });

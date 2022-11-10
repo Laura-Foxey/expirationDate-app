@@ -5,8 +5,6 @@ import ListItem from './ListItem.js';
 
 export default function List({navigation}) {
 
-  console.log(listData)
-
   const renderItem = ({item}) => {
     return (<ListItem item={item} navigation={navigation}/>)
   }
