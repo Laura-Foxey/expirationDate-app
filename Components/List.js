@@ -21,18 +21,12 @@ export default function List({navigation}) {
             renderItem={renderItem}
           />
         </View>
-        <Image style={styles.plusIcon} source={require("../img/3032220.png")} />
+        <Image style={styles.plusIcon} source={require("../assets/3032220.png")} />
       </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
   plusIcon : {
     width: 40, 
     height: 40

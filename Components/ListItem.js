@@ -5,8 +5,8 @@ export default function ListItem({item, navigation}) {
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <TouchableOpacity onPress={() => setExpanded(!expanded)}>
-        <View style={styles.item}>
+    <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.item}>
+        <View>
             <Text>{item.name}</Text>
             <Text>{item.storage}</Text>
             <Text>{item.expiration}</Text>
@@ -14,13 +14,13 @@ export default function ListItem({item, navigation}) {
                 <Text>{item.details}</Text> 
             }
             <View style={styles.Icons}>
-              <TouchableOpacity key={item.id} onPress={() => navigation.navigate("ItemDetails", { item })} >
+            <TouchableOpacity key={item.id} onPress={() => navigation.navigate("ItemDetails", { item })} >
                 <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
-              </TouchableOpacity>
-              <TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity>
                 <Image style={styles.deleteIcon} source={require("../assets/3096687.png")} 
-                  />
-              </TouchableOpacity>
+                />
+            </TouchableOpacity>
             </View>
         </View>
     </TouchableOpacity>
@@ -28,10 +28,6 @@ export default function ListItem({item, navigation}) {
 }
 
 const styles = StyleSheet.create({
-    box: {
-      display: 'flex',
-      flexDirection: 'column',
-    },
     item: {
         backgroundColor: '#f9c2ff',
         width: 200,
