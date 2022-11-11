@@ -36,7 +36,6 @@ export default function List({navigation}) {
     )
   }
 
-
   //invididual item render depending on search and filter
   const renderItem = ({item}) => {
     if(searchPhrase === "") {
@@ -67,7 +66,6 @@ export default function List({navigation}) {
     }
   }
 
-
   return (
       <SafeAreaView style={styles.container}>
         <Text>Products: </Text>
@@ -82,15 +80,15 @@ export default function List({navigation}) {
           <Text>Storage</Text>
           <Text>Expires in:</Text>
         </View>
-        <View>
           <FlatList
             data={data}
             keyExtractor ={(item) => item.id}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
-        </View>
-        <Image style={styles.plusIcon} source={require("../assets/3032220.png")} />
+        <TouchableOpacity onPress={() => navigation.navigate("AddItem", {})}>
+          <Image source={require("../assets/3032220.png")} style={styles.plusIcon}/>
+        </TouchableOpacity>
       </SafeAreaView>
   );
 }
@@ -111,7 +109,7 @@ const styles = StyleSheet.create({
   },
     plusIcon : {
       width: 40, 
-      height: 40
+      height: 40,
     },
     selected: {
       backgroundColor: "purple",
@@ -119,5 +117,4 @@ const styles = StyleSheet.create({
       marginVertical: 5,
       width: 300,
     },
-
 });

@@ -5,6 +5,7 @@ import {useFonts} from "expo-font";
 import Home from "./Screens/Home.js"
 import Details from "./Screens/Details"
 import ItemDetails from "./Screens/ItemDetails.js";
+import AddItem from "./Components/AddItem.js";
 
 const Stack = createStackNavigator();
 
@@ -31,6 +32,7 @@ const App = () => {
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="Details" component={Details}/>
         <Stack.Screen name="ItemDetails" component={ItemDetails}/>
+        <Stack.Screen name="AddItem" component={AddItem}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
