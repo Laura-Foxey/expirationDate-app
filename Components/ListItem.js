@@ -1,15 +1,36 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import ExpirationDate from './ExpirationDate';
 
 export default function ListItem({item, navigateToItem}) {
 
+  const assignColor = () => {
+    const countdown = calcCountdown(exp);
+    if (countdown <= 0) {
+      return {backgroundColor: "#453851"}
+    } else if (countdown < 4) {
+      return {backgroundColor: "#ffafb9"}
+    } else if (countdown < 7) {
+      return {backgroundColor: "#ffdeb5"}
+    } else if (countdown < 10) {
+      return {backgroundColor: "#feffb1"};
+    } else {
+      return {backgroundColor: "#a5ffc4"};
+    }
+  };
+
+  const today = Date.parse(new Date());
+  const exp = new Date(item.expiration).getTime();
+
+  const calcCountdown = (exp) => {
+      return Math.ceil((exp - today) / (1000 * 60 * 60 * 24));
+    };
+
   return (
-    <View style={styles.display}>
+    <View style={item.selected ? [styles.display, styles.selected] : [styles.display, assignColor()]}>
         <View style={styles.text}>
             <Text>{item.name}</Text>
             <Text>{item.storage}</Text>
-            <ExpirationDate expirationDate={item.expiration}/>
+            <Text>{calcCountdown(exp)}</Text>
         </View>
         <View>
         {item.clicked &&
@@ -36,8 +57,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-between"
     },
     display: {
-        flexDirection: "column",
         alignItems: 'center',
+        marginVertical: 5,
+        width: 300,
     },
       editIcon: {
         width: 40, 
@@ -52,5 +74,8 @@ const styles = StyleSheet.create({
       Icons: {
         display: 'flex',
         flexDirection: 'row'
+    },
+    selected: {
+      backgroundColor: "#dbbff2"
     }
 });

@@ -14,6 +14,8 @@ export default function List({navigation}) {
     setData(
       data.map((i) => ({...i, clicked: false, selected: false}))
     );
+    setDisplayBy("");
+    setSearchPhrase("");
     navigation.push("ItemDetails", { item })
   }
 
@@ -40,12 +42,12 @@ export default function List({navigation}) {
     if(searchPhrase === "") {
       if(displayBy=== "") {
         return (
-        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
           <ListItem item={item} navigateToItem={navigateToItem}/>
         </TouchableOpacity>)
       }else if(item.storage.includes(displayBy)) {
         return (
-          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
             <ListItem item={item} navigateToItem={navigateToItem}/>
           </TouchableOpacity>)
       }
@@ -53,12 +55,12 @@ export default function List({navigation}) {
     if (item.name.toLowerCase().includes(searchPhrase.toLowerCase().trim().replace(/\s/g, ""))) {
       if(displayBy=== "") {
         return (
-        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
           <ListItem item={item} navigateToItem={navigateToItem}/>
         </TouchableOpacity>)
        }else if(item.storage.includes(displayBy)) {
         return (
-          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
             <ListItem item={item} navigateToItem={navigateToItem}/>
           </TouchableOpacity>)
       }
@@ -111,14 +113,11 @@ const styles = StyleSheet.create({
       width: 40, 
       height: 40
     },
-    item: {
-      backgroundColor: '#f9c2ff',
+    selected: {
+      backgroundColor: "purple",
+      alignItems: 'center',
       marginVertical: 5,
       width: 300,
-  },
-  selected: {
-      backgroundColor: 'red',
-      marginVertical: 5,
-      width: 300,
-  },
+    },
+
 });
