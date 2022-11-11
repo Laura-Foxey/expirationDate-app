@@ -1,22 +1,80 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, FlatList} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {listData} from "../data.js"
-import DisplayBy from './DisplayBy.js';
 import ListItem from './ListItem.js';
-import SearchBar from './SearchBar.js';
+import DisplayBy from './DisplayBy.js';
 
 export default function List({navigation}) {
+  const [data, setData] = useState(listData);
+  const [displayBy, setDisplayBy] = useState('');
+  const [searchPhrase, setSearchPhrase] = useState("");
 
-  const renderItem = ({item}) => {
-    return (<ListItem item={item} navigation={navigation}/>)
+  //clears all data selections before navigating
+  const navigateToItem = (item) => {
+    setData(
+      data.map((i) => ({...i, clicked: false, selected: false}))
+    );
+    navigation.push("ItemDetails", { item })
   }
 
-  console.log(data)
-  console.log(displayBy)
+  //expands item on click
+  const onSetExpanded = (iid) => {
+    setData(
+    data.map((item) =>
+        item.id === iid ? { ...item, clicked: !item.clicked } : item
+    ))
+  }
+
+  //selects item on long click
+  const onSetSelected = (iid) => {
+    setData(
+      data.map((item) =>
+          item.id === iid ? { ...item, selected: !item.selected } : item
+      )
+    )
+  }
+
+
+  //invididual item render depending on search and filter
+  const renderItem = ({item}) => {
+    if(searchPhrase === "") {
+      if(displayBy=== "") {
+        return (
+        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+          <ListItem item={item} navigateToItem={navigateToItem}/>
+        </TouchableOpacity>)
+      }else if(item.storage.includes(displayBy)) {
+        return (
+          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+            <ListItem item={item} navigateToItem={navigateToItem}/>
+          </TouchableOpacity>)
+      }
+    }
+    if (item.name.toLowerCase().includes(searchPhrase.toLowerCase().trim().replace(/\s/g, ""))) {
+      if(displayBy=== "") {
+        return (
+        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+          <ListItem item={item} navigateToItem={navigateToItem}/>
+        </TouchableOpacity>)
+       }else if(item.storage.includes(displayBy)) {
+        return (
+          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)} style={item.selected ? styles.selected : styles.item}>
+            <ListItem item={item} navigateToItem={navigateToItem}/>
+          </TouchableOpacity>)
+      }
+    }
+  }
+
 
   return (
       <SafeAreaView style={styles.container}>
-        <Text>Produce: </Text>
+        <Text>Products: </Text>
+        <TextInput
+          		placeholder="Search"
+          		value={searchPhrase}
+          		onChangeText={setSearchPhrase}
+        	/>
+        <DisplayBy displayBy={displayBy} setDisplayBy={setDisplayBy} />
         <View style={styles.header}>
           <Text>Name</Text>
           <Text>Storage</Text>
@@ -24,7 +82,7 @@ export default function List({navigation}) {
         </View>
         <View>
           <FlatList
-            data={listData}
+            data={data}
             keyExtractor ={(item) => item.id}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
@@ -53,5 +111,14 @@ const styles = StyleSheet.create({
       width: 40, 
       height: 40
     },
-
+    item: {
+      backgroundColor: '#f9c2ff',
+      marginVertical: 5,
+      width: 300,
+  },
+  selected: {
+      backgroundColor: 'red',
+      marginVertical: 5,
+      width: 300,
+  },
 });
