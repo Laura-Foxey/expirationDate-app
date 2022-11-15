@@ -9,13 +9,13 @@ const DisplayBy = ({displayBy, setDisplayBy}) => {
     return (
         <View style={styles.header}>
             <TouchableOpacity onPress={() => setDisplayBy(displayBy==="Fridge" ? "" : "Fridge")}>
-            <Text>Fridge</Text>
+              <Text>Fridge</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setDisplayBy(displayBy==="Freezer" ? "" : "Freezer")}>
-            <Text>Freezer</Text>
+              <Text>Freezer</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setDisplayBy(displayBy==="Pantry" ? "" : "Pantry")}>
-            <Text>Pantry</Text>
+              <Text>Pantry</Text>
             </TouchableOpacity>
       </View>
     )

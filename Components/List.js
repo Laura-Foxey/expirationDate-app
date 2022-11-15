@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useCallback  } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput} from 'react-native';
 import {listData} from "../data.js"
 import ListItem from './ListItem.js';
@@ -22,8 +22,8 @@ export default function List({navigation}) {
   //expands item on click
   const onSetExpanded = (iid) => {
     setData(
-    data.map((item) =>
-        item.id === iid ? { ...item, clicked: !item.clicked } : item
+      data.map((item) =>
+          item.id === iid ? { ...item, clicked: !item.clicked } : item
     ))
   }
 
