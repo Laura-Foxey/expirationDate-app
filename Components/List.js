@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback  } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput} from 'react-native';
-import {listData} from "../data.js"
 import ListItem from './ListItem.js';
 import DisplayBy from './DisplayBy.js';
 
 export default function List({navigation}) {
-  const [data, setData] = useState(listData);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [displayBy, setDisplayBy] = useState('');
   const [searchPhrase, setSearchPhrase] = useState("");
@@ -21,56 +20,34 @@ export default function List({navigation}) {
   }
 
   //expands item on click
-  const onSetExpanded = (iid) => {
-    setData(
-      data.map((item) =>
-          item.id === iid ? { ...item, clicked: !item.clicked } : item
-    ))
-  }
+  // const onSetExpanded = (iid) => {
+  //   setData(
+  //     data.map((item) =>
+  //         item.id === iid ? { ...item, clicked: !item.clicked } : item
+  //   ))
+  // }
 
-  //selects item on long click
-  const onSetSelected = (iid) => {
-    setData(
-      data.map((item) =>
-          item.id === iid ? { ...item, selected: !item.selected } : item
-      )
-    )
-  }
+  // //selects item on long click
+  // const onSetSelected = (iid) => {
+  //   setData(
+  //     data.map((item) =>
+  //         item.id === iid ? { ...item, selected: !item.selected } : item
+  //     )
+  //   )
+  // }
 
   useEffect(() => {
     fetch("http://localhost:3000/products")
     .then(res => res.json())
-    .then(data => {setData(data), setLoading(false)})
-  })
+    .then(data => setData(data))
+  }, [])
 
   //invididual item render depending on search and filter
   const renderItem = ({item}) => {
-    if(searchPhrase === "") {
-      if(displayBy=== "") {
         return (
         <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
           <ListItem item={item} navigateToItem={navigateToItem}/>
         </TouchableOpacity>)
-      }else if(item.storage.includes(displayBy)) {
-        return (
-          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
-            <ListItem item={item} navigateToItem={navigateToItem}/>
-          </TouchableOpacity>)
-      }
-    }
-    if (item.name.toLowerCase().includes(searchPhrase.toLowerCase().trim().replace(/\s/g, ""))) {
-      if(displayBy=== "") {
-        return (
-        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
-          <ListItem item={item} navigateToItem={navigateToItem}/>
-        </TouchableOpacity>)
-       }else if(item.storage.includes(displayBy)) {
-        return (
-          <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
-            <ListItem item={item} navigateToItem={navigateToItem}/>
-          </TouchableOpacity>)
-      }
-    }
   }
 
   return (
