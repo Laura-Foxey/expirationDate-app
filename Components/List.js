@@ -6,6 +6,7 @@ import DisplayBy from './DisplayBy.js';
 
 export default function List({navigation}) {
   const [data, setData] = useState(listData);
+  const [loading, setLoading] = useState(true);
   const [displayBy, setDisplayBy] = useState('');
   const [searchPhrase, setSearchPhrase] = useState("");
 
@@ -14,9 +15,9 @@ export default function List({navigation}) {
     setData(
       data.map((i) => ({...i, clicked: false, selected: false}))
     );
-    setDisplayBy("");
-    setSearchPhrase("");
-    navigation.push("ItemDetails", { item })
+      setDisplayBy("");
+      setSearchPhrase("");
+      navigation.push("ItemDetails", { item })
   }
 
   //expands item on click
@@ -35,6 +36,12 @@ export default function List({navigation}) {
       )
     )
   }
+
+  useEffect(() => {
+    fetch("http://localhost:3000/products")
+    .then(res => res.json())
+    .then(data => {setData(data), setLoading(false)})
+  })
 
   //invididual item render depending on search and filter
   const renderItem = ({item}) => {

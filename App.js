@@ -5,7 +5,7 @@ import {useFonts} from "expo-font";
 import Home from "./Screens/Home.js"
 import Details from "./Screens/Details"
 import ItemDetails from "./Screens/ItemDetails.js";
-import AddItem from "./Components/AddItem.js";
+import AddItem from "./Screens/AddItem.js";
 
 const Stack = createStackNavigator();
 

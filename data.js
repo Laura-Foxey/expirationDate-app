@@ -6,4 +6,5 @@ export const listData = [
     {id: 4573, name: "Carrots", storage: "Freezer", expiration: "2022-11-18", details: "some info"},
     {id: 7843, name: "Peas", storage: "Freezer", expiration: "2026-12-31", details: "some info"},
     {id: 6433, name: "Bananas", storage: "Pantry", expiration: "2022-11-14", details: "some info"},
+    
 ]
