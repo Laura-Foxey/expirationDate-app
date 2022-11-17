@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity,  Text, TextInput, Image, Button } from 'react-native';
 import AddorEdit from '../Components/AddorEdit'
 
-const AddItem = ({navigation}) => {
-    const [Name, setName] = useState("");
-    const [date, setDate] = useState(new Date());
-    const [Storage, setStorage] = useState("");
-    const [dText, setText] = useState('')
-    const [Details, setDetails] = useState('');
+const EditItem = ({navigation, route}) => {
+    let { item } = route.params;
+    const [Name, setName] = useState(item.name);
+    const [date, setDate] = useState(new Date(item.expiration));
+    const [Storage, setStorage] = useState(item.storage);
+    const [dText, setText] = useState(item.expiration)
+    const [Details, setDetails] = useState(item.details);
 
     const onSubmit = () => {
-        fetch("http://192.168.43.52:3000/products", {
-            method: 'POST',
+        fetch(`http://192.168.43.52:3000/products/${item._id}`, {
+            method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 name: Name,
@@ -21,14 +22,8 @@ const AddItem = ({navigation}) => {
             })
         })
         .then(res => res.json())
-        //reset values on submit
-        setName("");
-        setDate(new Date());
-        setStorage("");
-        setText("");
-        setDetails("");
 
-        navigation.push("Home", {})
+        navigation.push("ItemDetails", {item})
     }
 
     return (
@@ -38,7 +33,7 @@ const AddItem = ({navigation}) => {
     )
 }
 
-export default AddItem;
+export default EditItem;
 
 const styles = StyleSheet.create({
     icon: {

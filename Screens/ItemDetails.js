@@ -1,22 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Pressable, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 export default function ItemDetails({navigation, route}) {
     let { item } = route.params;
-    const [Name, setName] = useState(item.name);
-    const [date, setDate] = useState(item.date);
-    const [Storage, setStorage] = useState(item.storage);
-    const [show, setShow] = useState(false);
-    const [dText, setText] = useState(item.date)
-    const [Details, setDetails] = useState(item.details);
+
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+      fetch(`http://192.168.43.52:3000/products/${item._id}`, { method: 'GET' })
+      .then(res => res.json())
+      .then(data => setData(data))
+      .catch((error) => console.log('fetchToken error: ', error))
+    },[])
 
   return (
     <View style={styles.container}>
-      <Text>Produce name: {Details}</Text>
-      <Text>Product is stored in: {Storage}</Text>
-      <Text>It will expire: {dText}</Text>
-      <Text>Details: {Details} </Text>
-      <TouchableOpacity>
+      <Text>Produce name: {data.name}</Text>
+      <Text>Product is stored in: {data.storage}</Text>
+      <Text>It will expire: {data.expiration}</Text>
+      <Text>Details: {data.details} </Text>
+      <TouchableOpacity onPress={() => navigation.push("EditItem", { item })}>
         <Image source={require("../assets/95637.png")}/>
       </TouchableOpacity>
     </View>

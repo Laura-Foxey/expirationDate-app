@@ -6,6 +6,7 @@ import Home from "./Screens/Home.js"
 import Details from "./Screens/Details"
 import ItemDetails from "./Screens/ItemDetails.js";
 import AddItem from "./Screens/AddItem.js";
+import EditItem from "./Screens/EditItem.js"
 
 const Stack = createStackNavigator();
 
@@ -33,6 +34,8 @@ const App = () => {
         <Stack.Screen name="Details" component={Details}/>
         <Stack.Screen name="ItemDetails" component={ItemDetails}/>
         <Stack.Screen name="AddItem" component={AddItem}/>
+        <Stack.Screen name="EditItem" component={EditItem}/>
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
