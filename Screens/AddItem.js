@@ -1,17 +1,45 @@
 import React, { useState } from 'react';
-import { View, SafeAreaView, StyleSheet, TouchableOpacity, TextInput, Image, Button } from 'react-native';
+import { View, SafeAreaView, StyleSheet, TouchableOpacity,  Text, TextInput, Image, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const AddItem = () => {
-    const [name, setName] = useState("");
+const AddItem = ({navigation}) => {
+    const [Name, setName] = useState("");
     const [date, setDate] = useState(new Date());
-    const [storage, setStorage] = useState("");
+    const [Storage, setStorage] = useState("");
     const [show, setShow] = useState(false);
+    const [dText, setText] = useState('')
+    const [Details, setDetails] = useState('');
 
     const onChange = (e, selectedDate) => {
         const currentDate = selectedDate || date;
         setDate(currentDate);
+
+        let tempDate = currentDate;
+        let fDate = tempDate.getFullYear() + '-' + (tempDate.getMonth() + 1) + '-' + tempDate.getDate();
+        setText(fDate);
         setShow(false);
+    }
+
+    const submit = () => {
+        fetch("http://192.168.43.52:3000/products", {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                name: Name,
+                storage: Storage,
+                expiration: dText,
+                details: Details,
+            })
+        })
+        .then(res => res.json())
+        //reset values on submit
+        setName("");
+        setDate(new Date());
+        setStorage("");
+        setText("");
+        setDetails("");
+
+        navigation.push("Home", {})
     }
 
     return (
@@ -19,8 +47,8 @@ const AddItem = () => {
             <TextInput
                 style={styles.input}
                 onChangeText={setName}
-                value={name}
-                placeholder="Product"
+                value={Name}
+                placeholder="Product name"
             />
             <View>
                 <TouchableOpacity onPress={() => setStorage("Fridge")}> 
@@ -34,8 +62,22 @@ const AddItem = () => {
                 </TouchableOpacity>
             </View>
             <View>
-                <Button title="DatePicker" onPress={() => setShow(true)}/>
-                {show && <DateTimePicker value={date} mode={'date'} minimumDate={new Date()} onChange={onChange}/>} 
+                {dText && <Text>Current expiration date picked: {dText}</Text>}
+                <Button title="Expiration Date" onPress={() => setShow(true)}/>
+                {show && <DateTimePicker value={date} mode='date' display='default' minimumDate={new Date()} onChange={onChange}/>} 
+            </View>
+            <View>
+                <TextInput
+                    style={styles.input}
+                    onChangeText={setDetails}
+                    value={Details}
+                    placeholder="Extra information about product"
+                />
+            </View>
+            <View>
+                <TouchableOpacity onPress={() => submit()}>
+                    <Text> Submit </Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )

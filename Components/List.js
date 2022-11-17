@@ -8,46 +8,78 @@ export default function List({navigation}) {
   const [loading, setLoading] = useState(true);
   const [displayBy, setDisplayBy] = useState('');
   const [searchPhrase, setSearchPhrase] = useState("");
+  const [delReload, setDelReload] = useState(false);
 
   //clears all data selections before navigating
   const navigateToItem = (item) => {
-    setData(
-      data.map((i) => ({...i, clicked: false, selected: false}))
-    );
-      setDisplayBy("");
-      setSearchPhrase("");
       navigation.push("ItemDetails", { item })
+      setData(
+        data.map((i) => ({...i, clicked: false, selected: false}))
+      );
+        setDisplayBy("");
+        setSearchPhrase("");
   }
 
   //expands item on click
-  // const onSetExpanded = (iid) => {
-  //   setData(
-  //     data.map((item) =>
-  //         item.id === iid ? { ...item, clicked: !item.clicked } : item
-  //   ))
-  // }
+  const onSetExpanded = (iid) => {
+    setData(
+      data.map((item) =>
+          item._id === iid ? { ...item, clicked: !item.clicked } : item
+    ))
+  }
 
-  // //selects item on long click
-  // const onSetSelected = (iid) => {
-  //   setData(
-  //     data.map((item) =>
-  //         item.id === iid ? { ...item, selected: !item.selected } : item
-  //     )
-  //   )
-  // }
+  //selects item on long click
+  const onSetSelected = (iid) => {
+    setData(
+      data.map((item) =>
+          item._id === iid ? { ...item, selected: !item.selected } : item
+      )
+    )
+  }
 
+  //data fetch and filter, finish loading
   useEffect(() => {
-    fetch("http://localhost:3000/products")
+    fetch("http://192.168.43.52:3000/products")
     .then(res => res.json())
-    .then(data => setData(data))
-  }, [])
+    .then(data => setData(data
+      .filter((d) => {
+        if (displayBy === '' || d.storage.includes(displayBy)) {return d}
+      })
+      .filter((d) => {
+        if(searchPhrase === '' || d.name.toLowerCase().includes(searchPhrase.toLowerCase())) {return d}
+    })))
+    .then(() => setLoading(false))
+    .catch((error) => console.log('fetchToken error: ', error))
+  }, [searchPhrase, displayBy, delReload])
 
-  //invididual item render depending on search and filter
+  //delete element
+  const onDelete = (id) => {
+    fetch(`http://192.168.43.52:3000/products/${id}`, { method: 'DELETE' })
+    .then(async response => {
+      const data = await response.json();
+
+      // check for error response
+      if (!response.ok) {
+          // get error message from body or default to response status
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+      }
+    })
+    .catch(error => {
+        console.error('There was an error!', error);
+    });
+    setDelReload(prev => !prev)
+  }
+
+
+  //invididual item render for FlatList
   const renderItem = ({item}) => {
-        return (
-        <TouchableOpacity key={item.id} onPress={() => onSetExpanded(item.id)} onLongPress={() => onSetSelected(item.id)}>
-          <ListItem item={item} navigateToItem={navigateToItem}/>
-        </TouchableOpacity>)
+      return (
+      loading ? <Text> Loading... </Text> : 
+      <TouchableOpacity onPress={() => onSetExpanded(item._id)} onLongPress={() => onSetSelected(item._id)}>
+        <ListItem item={item} navigateToItem={navigateToItem} onDelete={onDelete}/>
+      </TouchableOpacity>
+    )
   }
 
   return (
@@ -66,7 +98,7 @@ export default function List({navigation}) {
         </View>
           <FlatList
             data={data}
-            keyExtractor ={(item) => item.id}
+            keyExtractor ={(item) => item._id}
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />

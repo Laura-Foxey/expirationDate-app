@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-export default function ListItem({item, navigateToItem}) {
+export default function ListItem({item, navigateToItem, onDelete}) {
 
   const assignColor = () => {
     const countdown = calcCountdown(exp);
@@ -41,7 +41,7 @@ export default function ListItem({item, navigateToItem}) {
             <TouchableOpacity key={item.id} onPress={() => navigateToItem(item)} >
                 <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => onDelete(item._id)}>
                 <Image style={styles.deleteIcon} source={require("../assets/3096687.png")} 
                 />
             </TouchableOpacity>

@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { Pressable, StyleSheet, Text, View, Image } from 'react-native';
-import { TouchableOpacity } from 'react-native-web';
+import { Pressable, StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
 export default function ItemDetails({navigation, route}) {
     let { item } = route.params;
+    const [Name, setName] = useState(item.name);
+    const [date, setDate] = useState(item.date);
+    const [Storage, setStorage] = useState(item.storage);
+    const [show, setShow] = useState(false);
+    const [dText, setText] = useState(item.date)
+    const [Details, setDetails] = useState(item.details);
+
   return (
     <View style={styles.container}>
-      <Text>Produce name: {item.name}</Text>
-      <Text>Product is stored in: {item.storage}</Text>
-      <Text>It will expire: {item.expiration}</Text>
-      <Text>Details: {item.details} </Text>
-      <Text></Text>
+      <Text>Produce name: {Details}</Text>
+      <Text>Product is stored in: {Storage}</Text>
+      <Text>It will expire: {dText}</Text>
+      <Text>Details: {Details} </Text>
+      <TouchableOpacity></TouchableOpacity>
     </View>
   );
 }
