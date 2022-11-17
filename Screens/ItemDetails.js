@@ -16,7 +16,9 @@ export default function ItemDetails({navigation, route}) {
       <Text>Product is stored in: {Storage}</Text>
       <Text>It will expire: {dText}</Text>
       <Text>Details: {Details} </Text>
-      <TouchableOpacity></TouchableOpacity>
+      <TouchableOpacity>
+        <Image source={require("../assets/95637.png")}/>
+      </TouchableOpacity>
     </View>
   );
 }
