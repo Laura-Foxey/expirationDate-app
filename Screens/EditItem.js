@@ -15,9 +15,9 @@ const EditItem = ({navigation, route}) => {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                name: Name,
-                storage: Storage,
-                expiration: dText,
+                name: Name || item.name,
+                storage: Storage || item.storage,
+                expiration: dText || item.expiration,
                 details: Details,
             })
         })
@@ -28,7 +28,7 @@ const EditItem = ({navigation, route}) => {
 
     return (
         <View>
-            <AddorEdit onSubmit={onSubmit} Name={Name} setName={setName} date={date} setDate={setDate} setStorage={setStorage} dText={dText} setText={setText} Details={Details} setDetails={setDetails}/>
+            <AddorEdit onSubmit={onSubmit} Name={Name} setName={setName} date={date} setDate={setDate} Storage={Storage} setStorage={setStorage} dText={dText} setText={setText} Details={Details} setDetails={setDetails}/>
         </View>
     )
 }

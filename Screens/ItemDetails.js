@@ -15,7 +15,7 @@ export default function ItemDetails({navigation, route}) {
 
   return (
     <View style={styles.container}>
-      <Text>Produce name: {data.name}</Text>
+      <Text>Product name: {data.name}</Text>
       <Text>Product is stored in: {data.storage}</Text>
       <Text>It will expire: {data.expiration}</Text>
       <Text>Details: {data.details} </Text>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, SafeAreaView, StyleSheet, TouchableOpacity,  Text, TextInput, Image, Button } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-const AddorEdit = ({onSubmit, Name, setName, date, setDate, setStorage, dText, setText, Details, setDetails}) => {
+const AddorEdit = ({onSubmit, Name, setName, date, setDate, Storage, setStorage, dText, setText, Details, setDetails}) => {
     const [show, setShow] = useState(false);
 
     const onChange = (e, selectedDate) => {
@@ -25,13 +25,13 @@ const AddorEdit = ({onSubmit, Name, setName, date, setDate, setStorage, dText, s
             />
             <View>
                 <TouchableOpacity onPress={() => setStorage("Fridge")}> 
-                    <Image style={styles.icon} source={require("../assets/fridge.png")} />
+                    <Image style={Storage === "Fridge" ? styles.selectedIcon : styles.icon} source={require("../assets/fridge.png")} />
                  </TouchableOpacity>
                 <TouchableOpacity onPress={() => setStorage("Freezer")}> 
-                    <Image style={styles.icon} source={require("../assets/freezer.png")} />
+                    <Image style={Storage === "Freezer" ? styles.selectedIcon : styles.icon} source={require("../assets/freezer.png")} />
                  </TouchableOpacity>
                 <TouchableOpacity onPress={() => setStorage("Pantry")}>
-                    <Image style={styles.icon} source={require("../assets/pantry.png")} />
+                    <Image style={Storage === "Pantry" ? styles.selectedIcon : styles.icon} source={require("../assets/pantry.png")} />
                 </TouchableOpacity>
             </View>
             <View>
@@ -63,4 +63,9 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50
     },
+    selectedIcon: {
+        width: 50,
+        height: 50,
+        tintColor: '#FF5733'
+    }
 })

@@ -8,8 +8,13 @@ const AddItem = ({navigation}) => {
     const [Storage, setStorage] = useState("");
     const [dText, setText] = useState('')
     const [Details, setDetails] = useState('');
+    const [error, setError] = useState(false);
 
     const onSubmit = () => {
+        if (!Name || !dText || !Storage) {
+            setError(true) 
+            return ;
+        }
         fetch("http://192.168.43.52:3000/products", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -27,13 +32,15 @@ const AddItem = ({navigation}) => {
         setStorage("");
         setText("");
         setDetails("");
+        setError(false);
 
         navigation.push("Home", {})
     }
 
     return (
         <View>
-            <AddorEdit onSubmit={onSubmit} Name={Name} setName={setName} date={date} setDate={setDate} setStorage={setStorage} dText={dText} setText={setText} Details={Details} setDetails={setDetails}/>
+            <AddorEdit onSubmit={onSubmit} Name={Name} setName={setName} date={date} setDate={setDate} Storage={Storage} setStorage={setStorage} dText={dText} setText={setText} Details={Details} setDetails={setDetails}/>
+            {error && <Text>Please fill all information!</Text>}
         </View>
     )
 }
