@@ -53,22 +53,35 @@ export default function List({navigation}) {
   }, [searchPhrase, displayBy, delReload])
 
   //delete element
-  const onDelete = (id) => {
-    fetch(`http://192.168.43.52:3000/products/${id}`, { method: 'DELETE' })
-    .then(async response => {
-      const data = await response.json();
-
-      // check for error response
-      if (!response.ok) {
-          // get error message from body or default to response status
-          const error = (data && data.message) || response.status;
-          return Promise.reject(error);
-      }
-    })
-    .catch(error => {
-        console.error('There was an error!', error);
-    });
-    setDelReload(prev => !prev)
+  const onDelete = (name, id) => {
+    Alert.alert(
+      "Object delete warning",
+      `Are you sure you want to delete ${name}?`,
+      [
+        {
+          text: "Cancel",
+          onPress: () => { return ;},
+          style: "cancel"
+        },
+        { text: "Confirm", onPress: () => {
+          fetch(`http://192.168.43.52:3000/products/${id}`, { method: 'DELETE' })
+          .then(async response => {
+            const data = await response.json();
+      
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response status
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+          })
+          .catch(error => {
+              console.error('There was an error!', error);
+          });
+          setDelReload(prev => !prev)
+        } 
+      }]
+    );
   }
 
 
@@ -76,7 +89,7 @@ export default function List({navigation}) {
   const renderItem = ({item}) => {
       return (
       loading ? <Text> Loading... </Text> : 
-      <TouchableOpacity onPress={() => onSetExpanded(item._id)} onLongPress={() => onSetSelected(item._id)}>
+      <TouchableOpacity onPress={() => onSetExpanded(item.name, item._id)} onLongPress={() => onSetSelected(item._id)}>
         <ListItem item={item} navigateToItem={navigateToItem} onDelete={onDelete}/>
       </TouchableOpacity>
     )
