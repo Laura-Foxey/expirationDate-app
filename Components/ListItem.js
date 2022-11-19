@@ -39,10 +39,10 @@ export default function ListItem({item, navigateToItem, onDelete}) {
         </View>
         <View style={styles.Icons}>
             <TouchableOpacity key={item.id} onPress={() => navigateToItem(item)} >
-                <Image style={styles.editIcon} source={require("../assets/95637.png")}/>
+                <Image style={styles.editIcon} source={require("../assets/edit.png")}/>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => onDelete(item._id)}>
-                <Image style={styles.deleteIcon} source={require("../assets/3096687.png")} 
+            <TouchableOpacity onPress={() => onDelete(item.name, item._id)}>
+                <Image style={styles.deleteIcon} source={require("../assets/delete.png")} 
                 />
             </TouchableOpacity>
             </View>

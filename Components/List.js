@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useCallback  } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput} from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native';
 import ListItem from './ListItem.js';
 import DisplayBy from './DisplayBy.js';
 
@@ -12,13 +12,23 @@ export default function List({navigation}) {
 
   //clears all data selections before navigating
   const navigateToItem = (item) => {
-      navigation.push("ItemDetails", { item })
       setData(
         data.map((i) => ({...i, clicked: false, selected: false}))
       );
         setDisplayBy("");
         setSearchPhrase("");
+        navigation.navigate("ItemDetails", { item })
   }
+
+  const navigateToAdd = () => {
+    setData(
+      data.map((i) => ({...i, clicked: false, selected: false}))
+    );
+      setDisplayBy("");
+      setSearchPhrase("");
+      navigation.navigate("AddItem", {})
+}
+
 
   //expands item on click
   const onSetExpanded = (iid) => {
@@ -37,6 +47,18 @@ export default function List({navigation}) {
     )
   }
 
+  //count if there are more than one selection
+  const countSelected = () => {
+    let count = 0;
+    data.forEach(i => {
+      if(i.selected) {
+        count++
+        if(count > 1) {return true};
+      }
+      return false;
+    })
+  }
+
   //data fetch and filter, finish loading
   useEffect(() => {
     fetch("http://192.168.43.52:3000/products")
@@ -52,7 +74,7 @@ export default function List({navigation}) {
     .catch((error) => console.log('fetchToken error: ', error))
   }, [searchPhrase, displayBy, delReload])
 
-  //delete element
+  //delete element with confirmation pop-up
   const onDelete = (name, id) => {
     Alert.alert(
       "Object delete warning",
@@ -115,8 +137,11 @@ export default function List({navigation}) {
             renderItem={renderItem}
             showsVerticalScrollIndicator={false}
           />
-        <TouchableOpacity onPress={() => navigation.navigate("AddItem", {})}>
-          <Image source={require("../assets/3032220.png")} style={styles.plusIcon}/>
+        <TouchableOpacity onPress={() => navigateToAdd()}>
+          <Image source={require("../assets/add.png")} style={styles.plusIcon}/>
+        </TouchableOpacity>
+        <TouchableOpacity disabled={countSelected() ? true : false} >
+          <Image source={require("../assets/multi-delete.png")} style={styles.plusIcon}/>
         </TouchableOpacity>
       </SafeAreaView>
   );

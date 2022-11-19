@@ -15,4 +15,6 @@ router.put("/products/:id", updateProduct)
 
 router.delete("/products/:id", deleteProduct)
 
+router.delete("/products/:id") //TODO
+
 module.exports = router;

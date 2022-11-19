@@ -20,7 +20,7 @@ export default function ItemDetails({navigation, route}) {
       <Text>It will expire: {data.expiration}</Text>
       <Text>Details: {data.details} </Text>
       <TouchableOpacity onPress={() => navigation.push("EditItem", { item })}>
-        <Image source={require("../assets/95637.png")}/>
+        <Image source={require("../assets/edit.png")}/>
       </TouchableOpacity>
     </View>
   );

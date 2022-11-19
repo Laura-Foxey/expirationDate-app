@@ -110,10 +110,33 @@ const deleteProduct = (req, res) => {
           });
         }
         return res.status(500).send({
+          message: "Could not delete product with id " + req.params.id,
+        });
+    });
+  }
+
+  const deleteProducts = (req, res) => {
+    Product
+    .deleteMany({ _id: { $in: req.params.id}})
+    .then((data) => {
+        if (!data) {
+          return res.status(404).send({
+            message: "Products not found.",
+          });
+        }
+        res.send({ message: "Products deleted successfully!" });
+      })
+      .catch((err) => {
+        if (err.kind === "ObjectId" || err.name === "NotFound") {
+          return res.status(404).send({
+            message: "Products not found with id " + req.params.id,
+          });
+        }
+        return res.status(500).send({
           message: "Could not delete message with id " + req.params.id,
         });
-      });
-}
+    });
+  }
 
 module.exports = {
     getProduct,
