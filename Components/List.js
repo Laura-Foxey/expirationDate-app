@@ -91,11 +91,11 @@ export default function List({navigation}) {
     .catch((error) => console.log('fetchToken error: ', error))
   }, [searchPhrase, displayBy, orderBy, delReload])
 
-  //delete element with confirmation pop-up
-  const onDelete = (name, id) => {
+  //delete request with confirmation pop-up
+  const alertDelete = (typeString, confirmationString, url) => {
     Alert.alert(
-      "Product delete warning",
-      `Are you sure you want to delete ${name}?`,
+      `${typeString} delete warning`,
+      confirmationString,
       [
         {
           text: "Cancel",
@@ -103,7 +103,7 @@ export default function List({navigation}) {
           style: "cancel"
         },
         { text: "Confirm", onPress: () => {
-          fetch(`http://192.168.43.52:3000/products/${id}`, { method: 'DELETE' })
+          fetch(url, { method: 'DELETE' })
           .then(async response => {
             const data = await response.json();
       
@@ -123,63 +123,30 @@ export default function List({navigation}) {
     );
   }
 
-  const countSelected = useCallback(() => {
-    let count = 0;
-    let arr = [];
-    data.forEach(i => {
-      if(i.selected) {
-        count++
-        arr = arr + `${i._id},`;
-        if(count > 1) {
-          setDisable(false)
-        };
-      }
-      return arr;
-    })
-  }, [data])
-
-  const onMultipleDelete = () => {
-    let count = 0;
-    let arr = [];
-    data.forEach(i => {
-      if(i.selected) {
-        count++
-        arr = arr + `${i._id},`;
-        if(count > 1) {
-          setDisable(false)
-        };
-      }})
-    arr = arr.substring(0, arr.length - 1);
-    Alert.alert(
-      "Multiple delete warning",
-      `Are you sure you want to delete ${count} products?`,
-      [
-        {
-          text: "Cancel",
-          onPress: () => { return ;},
-          style: "cancel"
-        },
-        { text: "Confirm", onPress: () => {
-          fetch(`http://192.168.43.52:3000/products/arr/${arr}`, { method: 'DELETE' })
-          .then(async response => {
-            const data = await response.json();
-      
-            // check for error response
-            if (!response.ok) {
-                // get error message from body or default to response status
-                const error = (data && data.message) || response.status;
-                return Promise.reject(error);
-            }
-          })
-          .catch(error => {
-              console.error('There was an error!', error);
-          });
-          setDelReload(prev => !prev)
-        } 
-      }]
-    );
-   
-  }
+    //delete element
+    const onDelete = (name, id) => {
+      const confString = `Are you sure you want to delete ${name}?`;
+      const url = `http://192.168.43.52:3000/products/${id}`;
+      alertDelete("Product", confString, url)
+    }
+  
+    //multiple delete elements
+    const onMultipleDelete = () => {
+      let count = 0;
+      let arr = [];
+      data.forEach(i => {
+        if(i.selected) {
+          count++
+          arr = arr + `${i._id},`;
+          if(count > 1) {
+            setDisable(false)
+          };
+        }})
+      arr = arr.substring(0, arr.length - 1);
+      const confString = `Are you sure you want to delete ${count} products?`
+      url = `http://192.168.43.52:3000/products/arr/${arr}`;
+      alertDelete("Multiple", confString ,url);
+    }
 
 
   //invididual item render for FlatList
