@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { getProduct, getOneProduct, createProduct, updateProduct, deleteProduct } = require("./Controllers/Product");
+const { getProduct, getOneProduct, createProduct, updateProduct, deleteProduct, deleteProducts } = require("./Controllers/Product");
 
 router.get("/", (req, res) => {
   res.send("It's working.");
@@ -15,6 +15,6 @@ router.put("/products/:id", updateProduct)
 
 router.delete("/products/:id", deleteProduct)
 
-router.delete("/products/:id") //TODO
+router.delete("/products/arr/:id", deleteProducts) //TODO
 
 module.exports = router;

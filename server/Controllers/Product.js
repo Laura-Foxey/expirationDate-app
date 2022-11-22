@@ -98,7 +98,7 @@ const deleteProduct = (req, res) => {
     .then((data) => {
         if (!data) {
           return res.status(404).send({
-            message: "Product not found with id " + req.params.id,
+            message: "Products not found with id " + req.params.id,
           });
         }
         res.send({ message: "Product deleted successfully!" });
@@ -116,8 +116,9 @@ const deleteProduct = (req, res) => {
   }
 
   const deleteProducts = (req, res) => {
+    const IDs = req.params.id.split(",");
     Product
-    .deleteMany({ _id: { $in: req.params.id}})
+    .deleteMany({ _id: { $in: IDs}})
     .then((data) => {
         if (!data) {
           return res.status(404).send({
@@ -129,11 +130,11 @@ const deleteProduct = (req, res) => {
       .catch((err) => {
         if (err.kind === "ObjectId" || err.name === "NotFound") {
           return res.status(404).send({
-            message: "Products not found with id " + req.params.id,
+            message: "Products not found",
           });
         }
         return res.status(500).send({
-          message: "Could not delete message with id " + req.params.id,
+          message: "Could not delete products",
         });
     });
   }
@@ -143,5 +144,6 @@ module.exports = {
     getOneProduct,
     createProduct,
     updateProduct,
-    deleteProduct
+    deleteProduct,
+    deleteProducts
 }
