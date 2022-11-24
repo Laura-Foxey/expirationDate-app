@@ -57,8 +57,7 @@ export default function List({navigation}) {
   }
 
 
-  //count if there are more than one selection
-
+  //order by selection
   const dataOrderBy = (a, b) => {
     var dateA = new Date(a.expiration).getTime();
     var dateB = new Date(b.expiration).getTime();
@@ -100,9 +99,6 @@ export default function List({navigation}) {
       setDisable(true);
     }
   }, [data])
-
-  console.log(disable)
-
 
   //delete request with confirmation pop-up
   const alertDelete = (typeString, confirmationString, url) => {
@@ -203,6 +199,9 @@ export default function List({navigation}) {
         </TouchableOpacity>
         <TouchableOpacity onPress={() => onMultipleDelete()} disabled={disable}>
           <Image source={require("../assets/multi-delete.png")} style={styles.plusIcon}/>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("CodeScanner", {})}>
+          <Text> Scan </Text>
         </TouchableOpacity>
       </SafeAreaView>
   );

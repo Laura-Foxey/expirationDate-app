@@ -7,6 +7,7 @@ import Details from "./Screens/Details"
 import ItemDetails from "./Screens/ItemDetails.js";
 import AddItem from "./Screens/AddItem.js";
 import EditItem from "./Screens/EditItem.js"
+import CodeScanner from "./Screens/CodeScanner.js";
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name="ItemDetails" component={ItemDetails}/>
         <Stack.Screen name="AddItem" component={AddItem}/>
         <Stack.Screen name="EditItem" component={EditItem}/>
+        <Stack.Screen name="CodeScanner" component={CodeScanner}/>
         
       </Stack.Navigator>
     </NavigationContainer>
