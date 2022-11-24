@@ -17,7 +17,7 @@ const CodeScanner = ({navigation}) => {
         })()
     }
 
-	//ask camera permissions on 
+	//ask camera permissions, fetch barcodes
     useEffect(() => {
 		fetch("http://192.168.43.52:3000/barcodes")
 			.then(res => res.json())
@@ -27,6 +27,28 @@ const CodeScanner = ({navigation}) => {
         askForCameraPermission();
     }, [])
 
+	//check if scanend exists
+	useEffect(() => {
+		if(text) {
+			if (barcodes.filter(item => item.code === text).length > 0) {
+				//
+			} else { 
+				Alert.alert(
+					"Warning - Barcode not found!",
+					"Would you like to add barcode to your preference list?",
+					[
+					{
+						text: "No",
+						onPress: () => { return ; },
+					},
+					{ text: "Yes", onPress: () => {
+						navigation.navigate("AddBarcode", {})
+					} 
+					}]
+				);
+			}
+		}
+  	}, [text])
 
     const handleScan = ({type, data}) => {
         setScanned(true);
