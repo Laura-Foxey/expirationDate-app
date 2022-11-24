@@ -1,11 +1,14 @@
-import { View, Text, Button, StyleSheet } from 'react-native'
+import { View, Text, Button, StyleSheet, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { BarCodeScanner } from 'expo-barcode-scanner';
 
 const CodeScanner = ({navigation}) => {
     const [hasPermission, setHasPermission] = useState(null);
+	const [loading, setLoading] = useState(true)
     const [scanned, setScanned] = useState(false);
     const [text, setText] = useState('');
+	const [barcodes, setBarCodes] = useState([]);
+	const [productNotFound, setProductNotFound] = useState(false);
 
     const askForCameraPermission = () => {
         (async () => {
@@ -14,13 +17,16 @@ const CodeScanner = ({navigation}) => {
         })()
     }
 
+	//ask camera permissions on 
     useEffect(() => {
+		fetch("http://192.168.43.52:3000/barcodes")
+			.then(res => res.json())
+			.then(data => setBarCodes(data))
+			.then(() => setLoading(false))
+			.catch((error) => console.log('fetchToken error: ', error))
         askForCameraPermission();
     }, [])
 
-	 useEffect(() => {
-		
-  }, [])
 
     const handleScan = ({type, data}) => {
         setScanned(true);
