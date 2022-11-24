@@ -36,7 +36,10 @@ const CodeScanner = ({navigation}) => {
 
   return (
 	<>
-		<BarCodeScanner onBarCodeScanned= {scanned ? undefined : handleScan} style={[StyleSheet.absoluteFill, styles.container]}>
+		<BarCodeScanner 
+		onBarCodeScanned= {scanned ? undefined : handleScan} 
+		style={[StyleSheet.absoluteFill, styles.container]}
+		barCodeTypes={[BarCodeScanner.Constants.BarCodeType.codabar]}>
 			<View style={styles.layerTop} />
 			<View style={styles.layerCenter}>
 				<View style={styles.layerLeft} />
