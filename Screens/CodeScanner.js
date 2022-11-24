@@ -29,20 +29,34 @@ const CodeScanner = ({navigation}) => {
 
 	//check if scanend exists
 	useEffect(() => {
-		if(text) {
-			if (barcodes.filter(item => item.code === text).length > 0) {
-				//
-			} else { 
+		if(text && !loading) {
+			const barcode = barcodes.find(item => item.code === text)
+			if (!barcode) {
 				Alert.alert(
 					"Warning - Barcode not found!",
 					"Would you like to add barcode to your preference list?",
 					[
 					{
 						text: "No",
-						onPress: () => { return ; },
+						onPress: () => { setScanned(false); setText('')},
 					},
 					{ text: "Yes", onPress: () => {
 						navigation.navigate("AddBarcode", {})
+					} 
+					}]
+				);
+				
+			} else { 
+				Alert.alert(
+					"Existing barcode!",
+					`${barcode.name} - ${barcode.preference}`,
+					[
+					{
+						text: "Close",
+						onPress: () => { setScanned(false); setText('')},
+					},
+					{ text: "Edit barcode", onPress: () => {
+						//add navigation
 					} 
 					}]
 				);
@@ -76,8 +90,6 @@ const CodeScanner = ({navigation}) => {
 			</View>
 			<View style={styles.layerBottom} />
 		</BarCodeScanner>
-      <Text> {text} </Text>
-	  {scanned && <Button title="Scan again" onPress={() => setScanned(false)}/>}
     </>
   )
 }

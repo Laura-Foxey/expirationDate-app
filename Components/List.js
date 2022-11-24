@@ -56,7 +56,6 @@ export default function List({navigation}) {
     )
   }
 
-
   //order by selection
   const dataOrderBy = (a, b) => {
     var dateA = new Date(a.expiration).getTime();
