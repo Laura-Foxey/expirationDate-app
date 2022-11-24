@@ -56,6 +56,7 @@ export default function List({navigation}) {
     )
   }
 
+
   //count if there are more than one selection
 
   const dataOrderBy = (a, b) => {
@@ -90,6 +91,18 @@ export default function List({navigation}) {
     .then(() => setLoading(false))
     .catch((error) => console.log('fetchToken error: ', error))
   }, [searchPhrase, displayBy, orderBy, delReload])
+
+
+  useEffect(() => {
+    if (data.filter((item) => item.selected).length >= 2) {
+      setDisable(false);
+    } else {
+      setDisable(true);
+    }
+  }, [data])
+
+  console.log(disable)
+
 
   //delete request with confirmation pop-up
   const alertDelete = (typeString, confirmationString, url) => {
@@ -138,14 +151,11 @@ export default function List({navigation}) {
         if(i.selected) {
           count++
           arr = arr + `${i._id},`;
-          if(count > 1) {
-            setDisable(false)
-          };
         }})
       arr = arr.substring(0, arr.length - 1);
       const confString = `Are you sure you want to delete ${count} products?`
-      url = `http://192.168.43.52:3000/products/arr/${arr}`;
-      alertDelete("Multiple", confString ,url);
+      const url = `http://192.168.43.52:3000/products/arr/${arr}`;
+      alertDelete("Multiple", confString, url);
     }
 
 
@@ -191,7 +201,7 @@ export default function List({navigation}) {
         <TouchableOpacity onPress={() => navigateToAdd()}>
           <Image source={require("../assets/add.png")} style={styles.plusIcon}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => onMultipleDelete()}>
+        <TouchableOpacity onPress={() => onMultipleDelete()} disabled={disable}>
           <Image source={require("../assets/multi-delete.png")} style={styles.plusIcon}/>
         </TouchableOpacity>
       </SafeAreaView>
