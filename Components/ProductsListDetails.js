@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
-export default function ListItem({item, navigateToItem, onDelete}) {
+export default function ProductsListDetails({item, navigateToItem, onDelete}) {
 
   const assignColor = () => {
     const countdown = calcCountdown(exp);

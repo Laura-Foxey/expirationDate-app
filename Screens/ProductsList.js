@@ -1,10 +1,10 @@
 import React, { useEffect, useState, useMemo, useCallback  } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, FlatList, TouchableOpacity, TextInput, Alert } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import ListItem from './ListItem.js';
-import DisplayBy from './DisplayBy.js';
+import ListItem from '../Components/ProductsListDetails.js';
+import DisplayBy from '../Components/DisplayBy.js';
 
-export default function List({navigation}) {
+export default function ProductsList({navigation}) {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [displayBy, setDisplayBy] = useState('');

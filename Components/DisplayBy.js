@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import FocusStatusBar from "../Components/FocusStatusBar.js"
-import List from "../Components/List.js"
+import List from "../Screens/ProductsList"
 
 const DisplayBy = ({displayBy, setDisplayBy}) => {
 

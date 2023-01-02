@@ -27,9 +27,19 @@ const CodeScanner = ({navigation}) => {
         askForCameraPermission();
     }, [])
 
-	//check if scanend exists
+	//check if scanend barcode is number and exists 
 	useEffect(() => {
 		if(text && !loading) {
+			if(text.match(/^[0-9]+$/) != null){
+				Alert.alert(
+					"Warning",
+					"Error reading barcode",
+					{
+						text: "Retry",
+						onPress: () => { setScanned(false); setText('')},
+					},
+				);
+			}
 			const barcode = barcodes.find(item => item.code === text)
 			if (!barcode) {
 				Alert.alert(

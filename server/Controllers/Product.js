@@ -43,6 +43,7 @@ const getOneProduct = (req, res) => {
 const createProduct = (req, res) => {
     const product = new Product({
         name: req.body.name,
+        code: req.body.code,
         storage: req.body.storage,
         expiration: req.body.expiration,
         details: req.body.details
@@ -66,6 +67,7 @@ const updateProduct = (req, res) => {
     .findByIdAndUpdate(req.params.id,
         {
             name: req.body.name,
+            code: req.body.code,
             storage: req.body.storage,
             expiration: req.body.expiration,
             details: req.body.details
