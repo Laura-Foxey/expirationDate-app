@@ -13,7 +13,7 @@ const Home = ({navigation}) => {
                 <TouchableOpacity style={styles.circle} onPress={() => navigation.navigate("ProductsList", {})}>
                     <Text style={styles.circleText}>Product List</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.circle}>
+                <TouchableOpacity style={styles.circle} onPress={() => navigation.navigate("BarcodesList", {})}>
                     <Text style={styles.circleText}>Barcode List</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.circle} onPress={() => navigation.navigate("CodeScanner", {})}>

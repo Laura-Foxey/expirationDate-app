@@ -1,7 +1,5 @@
-import { View, Text, Button, StyleSheet, Alert } from 'react-native'
+import { View, Text, Button, StyleSheet, Alert, SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import { BarCodeScanner } from 'expo-barcode-scanner';
-import { SafeAreaView } from 'react-native-web';
 
 const BarcodesList = ({navigation}) => {
 	const [loading, setLoading] = useState(true)
@@ -38,6 +36,7 @@ const renderItem = ({item}) => {
 		renderItem={renderItem}
 		showsVerticalScrollIndicator={false}
 		/> */}
+		<Text> Hello </Text>
     </SafeAreaView>
   )
 }
