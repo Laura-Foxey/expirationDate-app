@@ -187,12 +187,12 @@ export default function ProductsList({navigation}) {
           <Text>Storage</Text>
           <Text>Expires in:</Text>
         </View>
-          <FlatList
-            data={data}
-            keyExtractor ={(item) => item._id}
-            renderItem={renderItem}
-            showsVerticalScrollIndicator={false}
-          />
+        <FlatList
+          data={data}
+          keyExtractor ={(item) => item._id}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+        />
         <TouchableOpacity onPress={() => navigateToAdd()}>
           <Image source={require("../assets/add.png")} style={styles.plusIcon}/>
         </TouchableOpacity>
