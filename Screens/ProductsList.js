@@ -199,9 +199,6 @@ export default function ProductsList({navigation}) {
         <TouchableOpacity onPress={() => onMultipleDelete()} disabled={disable}>
           <Image source={require("../assets/multi-delete.png")} style={styles.plusIcon}/>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate("CodeScanner", {})}>
-          <Text> Scan </Text>
-        </TouchableOpacity>
       </SafeAreaView>
   );
 }

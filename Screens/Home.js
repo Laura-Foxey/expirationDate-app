@@ -16,6 +16,9 @@ const Home = ({navigation}) => {
                 <TouchableOpacity style={styles.circle}>
                     <Text style={styles.circleText}>Barcode List</Text>
                 </TouchableOpacity>
+                <TouchableOpacity style={styles.circle} onPress={() => navigation.navigate("CodeScanner", {})}>
+                    <Text style={styles.circleText}>Scan</Text>
+                </TouchableOpacity>
             </View>
         </SafeAreaView>
     )
