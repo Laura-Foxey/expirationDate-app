@@ -1,4 +1,4 @@
-import { View, Text, Button, StyleSheet, Alert, SafeAreaView } from 'react-native'
+import { View, Text, Button, StyleSheet, Alert, SafeAreaView, FlatList, TouchableOpacity } from 'react-native'
 import React, { useEffect, useState } from 'react'
 
 const BarcodesList = ({navigation}) => {
@@ -6,7 +6,7 @@ const BarcodesList = ({navigation}) => {
 	const [barcodes, setBarCodes] = useState([]);
 
 
-	//ask camera permissions, fetch barcodes
+	//fetch barcodes
     useEffect(() => {
 		fetch("http://192.168.43.52:3000/barcodes")
 			.then(res => res.json())
@@ -21,8 +21,10 @@ console.log(barcodes);
 const renderItem = ({item}) => {
 	return (
 	loading ? <Text> Loading... </Text> : 
-	<TouchableOpacity onPress={() => onSetExpanded(item._id)} onLongPress={() => onSetSelected(item._id)}>
-		<Text></Text>
+	<TouchableOpacity>
+		<Text>{item.name}</Text>
+		<Text>{item.preference}</Text>
+		<Text>{item.code}</Text>
 	</TouchableOpacity>
 	)
 }
@@ -30,13 +32,12 @@ const renderItem = ({item}) => {
 
   return (
 	<SafeAreaView>
-		{/* <FlatList
-		data={barcodes}
-		keyExtractor ={(item) => item._id}
-		renderItem={renderItem}
-		showsVerticalScrollIndicator={false}
-		/> */}
-		<Text> Hello </Text>
+		<FlatList
+          data={barcodes}
+          keyExtractor ={(item) => item.code}
+          renderItem={renderItem}
+          showsVerticalScrollIndicator={false}
+        />
     </SafeAreaView>
   )
 }
