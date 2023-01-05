@@ -10,6 +10,7 @@ import EditItem from "./Screens/EditItem.js"
 import CodeScanner from "./Screens/CodeScanner.js";
 import AddBarcode from "./Screens/AddBarcode.js";
 import ProductsList from "./Screens/ProductsList.js";
+import BarcodesList from "./Screens/BarcodesList.js"
 // import BarCodeList from "./Screens/BarCodeList.js";
 
 const Stack = createStackNavigator();
@@ -36,6 +37,7 @@ const App = () => {
       <Stack.Navigator screenOptions= {{headerShown: false}} initialRouteName="Home">
         <Stack.Screen name="Home" component={Home}/>
         <Stack.Screen name="ProductsList" component={ProductsList} />
+        <Stack.Screen name="BarcodesList" component={BarcodesList} />
         <Stack.Screen name="Details" component={Details}/>
         <Stack.Screen name="ItemDetails" component={ItemDetails}/>
         <Stack.Screen name="AddItem" component={AddItem}/>

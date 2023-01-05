@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { SafeAreaView } from 'react-native-web';
 
-const CodesList = ({navigation}) => {
+const BarcodesList = ({navigation}) => {
 	const [loading, setLoading] = useState(true)
 	const [barcodes, setBarCodes] = useState([]);
 
@@ -18,44 +18,32 @@ const CodesList = ({navigation}) => {
     }, [])
 
 
+console.log(barcodes);
+
+const renderItem = ({item}) => {
+	return (
+	loading ? <Text> Loading... </Text> : 
+	<TouchableOpacity onPress={() => onSetExpanded(item._id)} onLongPress={() => onSetSelected(item._id)}>
+		<Text></Text>
+	</TouchableOpacity>
+	)
+}
 
 
   return (
 	<SafeAreaView>
-		
+		{/* <FlatList
+		data={barcodes}
+		keyExtractor ={(item) => item._id}
+		renderItem={renderItem}
+		showsVerticalScrollIndicator={false}
+		/> */}
     </SafeAreaView>
   )
 }
 
-export default CodesList
+export default BarcodesList
 
-const opacity = 'rgba(0, 0, 0, .8)';
 const styles = StyleSheet.create({
-	container: {
-	  flex: 1,
-	  flexDirection: 'row'
-	},
-	layerTop: {
-	  flex: 2,
-	  backgroundColor: opacity
-	},
-	layerCenter: {
-	  flex: 5,
-	  flexDirection: 'column'
-	},
-	layerLeft: {
-	  flex: 5,
-	  backgroundColor: opacity
-	},
-	focused: {
-	  flex: 20
-	},
-	layerRight: {
-	  flex: 5,
-	  backgroundColor: opacity
-	},
-	layerBottom: {
-	  flex: 2,
-	  backgroundColor: opacity
-	},
+	
   });
