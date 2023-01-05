@@ -29,7 +29,6 @@ const renderItem = ({item}) => {
 	)
 }
 
-
   return (
 	<SafeAreaView>
 		<FlatList

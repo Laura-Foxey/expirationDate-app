@@ -4,37 +4,32 @@ import AddorEdit from '../Components/AddorEdit'
 
 const AddBarcode = ({navigation}) => {
     // const [Name, setName] = useState("");
-    // const [date, setDate] = useState(new Date());
-    // const [Storage, setStorage] = useState("");
-    // const [dText, setText] = useState('')
-    // const [Details, setDetails] = useState('');
+    // const [Preference, setPreference] = useState("");
+    // const [Code, setCode] = useState('')
     // const [error, setError] = useState(false);
 
     // const onSubmit = () => {
-    //     if (!Name || !dText || !Storage) {
+    //     if (!Name || !Preference || !Code) {
     //         setError(true) 
     //         return ;
     //     }
-    //     fetch("http://192.168.43.52:3000/products", {
+    //     fetch("http://192.168.43.52:3000/barcodes", {
     //         method: 'POST',
     //         headers: { 'Content-Type': 'application/json' },
     //         body: JSON.stringify({
     //             name: Name,
-    //             storage: Storage,
-    //             expiration: dText,
-    //             details: Details,
+    //             preference: Preference,
+    //             code: Code,
     //         })
     //     })
     //     .then(res => res.json())
     //     //reset values on submit
     //     setName("");
-    //     setDate(new Date());
-    //     setStorage("");
-    //     setText("");
-    //     setDetails("");
+    //     setCode(new Date());
+    //     setPreference("");
     //     setError(false);
 
-    //     navigation.push("Home", {})
+    //     navigation.push("BarcodesList", {})
     // }
 
     return (

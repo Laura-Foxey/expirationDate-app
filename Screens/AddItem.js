@@ -34,7 +34,7 @@ const AddItem = ({navigation}) => {
         setDetails("");
         setError(false);
 
-        navigation.push("Home", {})
+        navigation.push("ProductsList", {})
     }
 
     return (
